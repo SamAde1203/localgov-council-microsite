@@ -1,0 +1,34 @@
+# Builds the full Composer codebase and pushes it to the `_snapshot` branch.
+# Used to get a complete, browsable copy of LocalGov Drupal and its
+# dependencies (and an up-to-date composer.lock) without running Composer
+# locally. Run it manually from the Actions tab.
+name: Build codebase snapshot
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer:v2
+      - name: Composer install
+        run: |
+          composer update --no-interaction --no-progress 2>&1 | tail -40
+      - name: Push snapshot branch
+        run: |
+          rm -rf .git/hooks
+          find web vendor -name .git -type d -prune -exec rm -rf {} +
+          git config user.name "snapshot-bot"
+          git config user.email "snapshot-bot@users.noreply.github.com"
+          git checkout --orphan _snapshot
+          git add -A -f composer.json composer.lock vendor web
+          git commit -q -m "Codebase snapshot $(date -u +%F)"
+          git push -f origin _snapshot
