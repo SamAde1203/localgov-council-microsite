@@ -1,0 +1,9 @@
+#!/bin/bash
+
+## Description: Install Demo City Council on LocalGov Drupal, with demo content
+## Usage: setup-site
+## Example: ddev setup-site
+
+set -e
+bash scripts/setup-site.sh
+drush user:login

@@ -1,0 +1,4 @@
+administer bin day finder:
+  title: 'Administer Bin Day Finder'
+  description: 'Change the postcode lookup service and collection schedule settings.'
+  restrict access: true

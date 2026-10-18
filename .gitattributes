@@ -1,0 +1,12 @@
+# Keep Unix line endings everywhere. DDEV commands and shell scripts run in
+# Linux containers and break with Windows (CRLF) line endings.
+* text=auto eol=lf
+
+# Binary files.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary

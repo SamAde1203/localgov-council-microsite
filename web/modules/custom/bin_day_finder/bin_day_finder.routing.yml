@@ -1,0 +1,15 @@
+bin_day_finder.lookup:
+  path: '/bin-day'
+  defaults:
+    _form: '\Drupal\bin_day_finder\Form\BinDayLookupForm'
+    _title: 'Find your bin collection day'
+  requirements:
+    _permission: 'access content'
+
+bin_day_finder.settings:
+  path: '/admin/config/services/bin-day-finder'
+  defaults:
+    _form: '\Drupal\bin_day_finder\Form\SettingsForm'
+    _title: 'Bin Day Finder settings'
+  requirements:
+    _permission: 'administer bin day finder'

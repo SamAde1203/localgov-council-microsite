@@ -1,0 +1,59 @@
+{#
+/**
+ * @file
+ * Upcoming bin collections for a postcode.
+ *
+ * Available variables:
+ * - postcode: The normalised postcode, for example "S1 2HH".
+ * - district: The local authority district, if known.
+ * - verified: FALSE if the postcode was checked for format only.
+ * - collections: List of collections, soonest first. Each has:
+ *   - id: Bin machine name, used for styling.
+ *   - label: Bin name.
+ *   - description: What goes in the bin.
+ *   - date_iso: Date in Y-m-d format for the <time> element.
+ *   - date_label: Human-readable date.
+ *   - relative: "Today", "Tomorrow" or empty.
+ *
+ * Colour is never the only way a bin is identified: every card has a text
+ * label, and the colour swatch is hidden from assistive technology.
+ */
+#}
+{{ attach_library('bin_day_finder/results') }}
+<section class="bin-day-results" aria-labelledby="bin-day-results-title" data-bin-day-results>
+  <h2 id="bin-day-results-title" class="bin-day-results__title" tabindex="-1">
+    {{ 'Collections for @postcode'|t({'@postcode': postcode}) }}
+  </h2>
+
+  {% if district %}
+    <p class="bin-day-results__area">{{ district }}</p>
+  {% endif %}
+
+  {% if not verified %}
+    <p class="bin-day-results__notice">
+      {{ 'We could not confirm this postcode right now, so these dates are based on the postcode area. Check the dates again later if they look wrong.'|t }}
+    </p>
+  {% endif %}
+
+  <ul class="bin-day-results__list">
+    {% for collection in collections %}
+      <li class="bin-card bin-card--{{ collection.id|clean_class }}">
+        <span class="bin-card__swatch" aria-hidden="true"></span>
+        <div class="bin-card__body">
+          <h3 class="bin-card__title">{{ collection.label }}</h3>
+          <p class="bin-card__date">
+            <time datetime="{{ collection.date_iso }}">{{ collection.date_label }}</time>
+            {% if collection.relative %}
+              <strong class="bin-card__badge">{{ collection.relative }}</strong>
+            {% endif %}
+          </p>
+          <p class="bin-card__description">{{ collection.description }}</p>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <p class="bin-day-results__help">
+    {{ 'Put your bins out by 7am on your collection day, with the lid closed.'|t }}
+  </p>
+</section>

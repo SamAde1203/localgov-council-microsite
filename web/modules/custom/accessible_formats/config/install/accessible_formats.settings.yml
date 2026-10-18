@@ -1,0 +1,4 @@
+extensions: 'pdf doc docx odt rtf xls xlsx ods ppt pptx odp'
+response_days: 10
+notify_email: ''
+flood_limit: 5

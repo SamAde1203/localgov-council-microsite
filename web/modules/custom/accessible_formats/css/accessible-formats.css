@@ -1,0 +1,31 @@
+.accessible-format-notice {
+  margin: 0.25rem 0 1rem;
+  font-size: 0.9375rem;
+}
+
+.accessible-format-confirmation__panel {
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  /* White on #00703c is 6.2:1. */
+  color: #fff;
+  background: #00703c;
+  text-align: center;
+}
+
+.accessible-format-confirmation__panel strong {
+  font-size: 1.5rem;
+}
+
+.accessible-format-confirmation__title {
+  margin-top: 0;
+  color: inherit;
+}
+
+.accessible-format-confirmation:focus {
+  outline: none;
+}
+
+/* Some LocalGov components enlarge links; keep the notice one size. */
+.accessible-format-notice a {
+  font-size: inherit;
+}

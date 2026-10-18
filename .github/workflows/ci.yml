@@ -1,0 +1,151 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Coding standards and tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: gd, pdo_sqlite, sqlite3
+          ini-values: memory_limit=-1
+          coverage: none
+
+      - name: Validate composer.json
+        run: composer validate --no-check-publish
+
+      - name: Cache Composer downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/composer/files
+          key: composer-${{ hashFiles('composer.lock') }}
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
+
+      - name: Drupal coding standards (phpcs)
+        run: vendor/bin/phpcs
+
+      - name: Start PHP web server for functional tests
+        working-directory: web
+        run: php -S 127.0.0.1:8080 .ht.router.php > /tmp/php-server.log 2>&1 &
+
+      - name: Unit, kernel and functional tests (PHPUnit)
+        env:
+          SIMPLETEST_DB: sqlite://localhost//tmp/test.sqlite
+          SIMPLETEST_BASE_URL: http://127.0.0.1:8080
+          BROWSERTEST_OUTPUT_DIRECTORY: /tmp
+        run: vendor/bin/phpunit --log-junit /tmp/junit.xml
+
+      - name: Report test failures as annotations
+        if: failure()
+        run: |
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET, os
+          if not os.path.exists('/tmp/junit.xml'):
+              print('::error title=PHPUnit::No JUnit report; PHPUnit did not start. See the step log.')
+              raise SystemExit
+          for case in ET.parse('/tmp/junit.xml').iter('testcase'):
+              for tag in ('failure', 'error', 'warning'):
+                  for node in case.findall(tag):
+                      text = ((node.get('message') or '') + ' ' + (node.text or '')).strip()
+                      text = text.replace('%', '%25').replace('\r', '').replace('\n', '%0A')[:1500]
+                      print(f"::error title={tag}: {case.get('class', '')}::{case.get('name')}: {text}")
+          import glob, re, html
+          pages = sorted(glob.glob('web/sites/simpletest/browser_output/*.html'), key=os.path.getmtime)
+          for page in pages:
+              body = open(page, errors='replace').read()
+              if 'unexpected error' in body or 'Error' in body:
+                  text = html.unescape(re.sub(r'<[^>]+>', ' ', re.sub(r'(?s)<(script|style|head).*?</\1>', '', body)))
+                  text = re.sub(r'\s+', ' ', text).strip()[:1800].replace('%', '%25')
+                  print(f"::error title=First error page ({os.path.basename(page)})::{text}")
+                  break
+          if os.path.exists('/tmp/php-server.log'):
+              tail = open('/tmp/php-server.log', errors='replace').read()[-1500:].replace('%', '%25').replace('\n', '%0A')
+              print(f"::error title=PHP server log tail::{tail}")
+          PY
+
+  accessibility:
+    name: Accessibility (axe-core, WCAG 2.2 AA)
+    runs-on: ubuntu-latest
+    needs: quality
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: gd, pdo_sqlite, sqlite3
+          ini-values: memory_limit=-1
+          coverage: none
+
+      - name: Cache Composer downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/composer/files
+          key: composer-${{ hashFiles('composer.lock') }}
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
+
+      - name: Install the site (LocalGov Drupal, custom modules, demo content)
+        env:
+          DRUSH: vendor/bin/drush
+          DB_URL: sqlite://localhost/${{ github.workspace }}/web/sites/default/files/.ht.sqlite
+        run: |
+          set -o pipefail
+          bash scripts/setup-site.sh 2>&1 | tee /tmp/setup.log
+
+      - name: Report setup output as an annotation
+        if: failure()
+        run: |
+          if [ -f /tmp/setup.log ]; then
+            python3 -c "print('::error title=Setup output (last lines)::' + open('/tmp/setup.log', errors='replace').read()[-1800:].replace('%', '%25').replace(chr(10), '%0A'))"
+          fi
+
+      - name: Start PHP web server
+        working-directory: web
+        run: php -S 127.0.0.1:8888 .ht.router.php > /tmp/php-server.log 2>&1 &
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install Playwright and axe-core
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Run accessibility checks
+        env:
+          BASE_URL: http://127.0.0.1:8888
+        run: npm run a11y
+
+      - name: Report Drupal errors as annotations
+        if: failure()
+        working-directory: web
+        run: |
+          ../vendor/bin/drush watchdog:show --count=10 --format=json 2>/dev/null \
+            | python3 -c "import json,sys
+          for row in (json.load(sys.stdin) or {}).values():
+              msg = str(row.get('message', ''))[:1500].replace('%', '%25').replace(chr(10), '%0A')
+              print('::error title=Drupal log (' + str(row.get('severity')) + ')::' + msg)" || true
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: accessibility-screenshots
+          path: tests/accessibility/screenshots/

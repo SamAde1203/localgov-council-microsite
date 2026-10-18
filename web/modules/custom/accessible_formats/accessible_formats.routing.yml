@@ -1,0 +1,20 @@
+accessible_formats.request:
+  path: '/accessible-format/request/{file}'
+  defaults:
+    _form: '\Drupal\accessible_formats\Form\RequestForm'
+    _title: 'Request an accessible format'
+  requirements:
+    _custom_access: '\Drupal\accessible_formats\Form\RequestForm::access'
+    file: \d+
+  options:
+    parameters:
+      file:
+        type: entity:file
+
+accessible_formats.settings:
+  path: '/admin/config/services/accessible-formats'
+  defaults:
+    _form: '\Drupal\accessible_formats\Form\SettingsForm'
+    _title: 'Accessible formats'
+  requirements:
+    _permission: 'administer accessible format requests'

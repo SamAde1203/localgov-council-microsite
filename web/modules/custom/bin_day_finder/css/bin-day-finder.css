@@ -1,0 +1,89 @@
+/**
+ * @file
+ * Bin Day Finder results. Theme-neutral; themes can override the custom
+ * properties below.
+ */
+
+.bin-day-results {
+  --bin-black: #0b0c0c;
+  --bin-blue: #1d70b8;
+  --bin-brown: #6f4e37;
+  --bin-border: #b1b4b6;
+  margin-block-start: 2rem;
+}
+
+.bin-day-results__title:focus {
+  /* Focus is moved here by script; the heading is not interactive. */
+  outline: none;
+}
+
+.bin-day-results__area {
+  margin-block: 0 1rem;
+  color: #505a5f;
+}
+
+.bin-day-results__notice {
+  padding: 1rem;
+  border-inline-start: 6px solid #1d70b8;
+  background: #f3f2f1;
+}
+
+.bin-day-results__list {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bin-card {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1rem;
+  border: 1px solid var(--bin-border);
+  border-radius: 4px;
+  background: #fff;
+}
+
+.bin-card__swatch {
+  flex: 0 0 2.5rem;
+  height: 3rem;
+  border-radius: 4px 4px 2px 2px;
+  background: var(--bin-colour, var(--bin-black));
+}
+
+.bin-card--black { --bin-colour: var(--bin-black); }
+.bin-card--blue { --bin-colour: var(--bin-blue); }
+.bin-card--brown { --bin-colour: var(--bin-brown); }
+
+.bin-card__title {
+  margin: 0 0 0.25rem;
+  font-size: 1.25rem;
+}
+
+.bin-card__date {
+  margin: 0 0 0.25rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.bin-card__badge {
+  display: inline-block;
+  margin-inline-start: 0.5rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 2px;
+  background: #00703c;
+  color: #fff;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.bin-card__description {
+  margin: 0;
+}
+
+.bin-day-results__help {
+  margin-block-start: 1.5rem;
+}

@@ -1,0 +1,21 @@
+services:
+  logger.channel.bin_day_finder:
+    parent: logger.channel_base
+    arguments: ['bin_day_finder']
+
+  bin_day_finder.postcode_lookup:
+    class: Drupal\bin_day_finder\Service\PostcodeLookup
+    arguments:
+      - '@http_client'
+      - '@cache.default'
+      - '@config.factory'
+      - '@datetime.time'
+      - '@logger.channel.bin_day_finder'
+  Drupal\bin_day_finder\Service\PostcodeLookupInterface: '@bin_day_finder.postcode_lookup'
+
+  bin_day_finder.schedule:
+    class: Drupal\bin_day_finder\Service\CollectionScheduleProvider
+    arguments:
+      - '@config.factory'
+      - '@datetime.time'
+  Drupal\bin_day_finder\Service\CollectionScheduleProviderInterface: '@bin_day_finder.schedule'

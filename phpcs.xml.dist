@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="localgov-council-microsite">
+  <description>Drupal and DrupalPractice coding standards for custom code.</description>
+
+  <file>web/modules/custom</file>
+  <file>web/themes/custom</file>
+
+  <arg name="extensions" value="php,module,inc,install,theme,yml,md"/>
+  <arg name="colors"/>
+  <arg value="sp"/>
+
+  <rule ref="Drupal"/>
+  <rule ref="DrupalPractice"/>
+</ruleset>

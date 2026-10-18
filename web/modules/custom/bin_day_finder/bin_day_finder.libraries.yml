@@ -1,0 +1,10 @@
+results:
+  version: 1.0
+  css:
+    component:
+      css/bin-day-finder.css: {}
+  js:
+    js/bin-day-finder.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

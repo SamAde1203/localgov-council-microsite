@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Theme functions for the Demo City Council theme.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_preprocess_HOOK() for html.
+ *
+ * The home page title was "Demo City Council | Demo City Council", because
+ * the page and the site share a name. Screen readers read the title first, so
+ * it should not repeat itself.
+ */
+function demo_city_preprocess_html(array &$variables): void {
+  if (!empty($variables['is_front'])) {
+    $variables['head_title'] = ['name' => $variables['head_title']['name'] ?? \Drupal::config('system.site')->get('name')];
+  }
+}

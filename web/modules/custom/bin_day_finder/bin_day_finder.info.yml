@@ -1,0 +1,8 @@
+name: 'Bin Day Finder'
+type: module
+description: 'Lets residents enter a postcode and see their next bin collection days.'
+package: 'Council services'
+core_version_requirement: ^11.1
+configure: bin_day_finder.settings
+dependencies:
+  - drupal:node

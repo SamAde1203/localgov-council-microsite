@@ -1,0 +1,4 @@
+administer accessible format requests:
+  title: 'Administer accessible format requests'
+  description: 'View and update requests from residents for documents in another format, and change the settings.'
+  restrict access: true

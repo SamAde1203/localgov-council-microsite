@@ -1,0 +1,16 @@
+{#
+/**
+ * @file
+ * Notice shown under a downloadable document.
+ *
+ * Wording follows the GOV.UK pattern for documents that may not be accessible.
+ *
+ * Available variables:
+ * - url: Link to the request form for this document.
+ * - document: The document's name, for screen reader users.
+ */
+#}
+<p class="accessible-format-notice">
+  {{ 'This file may not be suitable for users of assistive technology.'|t }}
+  <a href="{{ url }}">{{ 'Request an accessible format'|t }}<span class="visually-hidden"> {{ 'of @document'|t({'@document': document}) }}</span></a>.
+</p>

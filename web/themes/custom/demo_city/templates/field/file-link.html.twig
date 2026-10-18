@@ -1,0 +1,14 @@
+{#
+/**
+ * @file
+ * Link to a file, with the accessible format notice underneath.
+ *
+ * Available variables:
+ * - attributes: The HTML attributes for the containing element.
+ * - link: A link to the file, with its type and size (from LocalGov Base).
+ * - accessible_format_notice: "Request an accessible format" notice, added
+ *   by the accessible_formats module for documents such as PDFs.
+ */
+#}
+<span{{ attributes }}>{{ link }}</span>
+{{ accessible_format_notice }}

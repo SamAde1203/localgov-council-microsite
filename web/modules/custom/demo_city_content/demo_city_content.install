@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Install hooks for the Demo City Council content module.
+ */
+
+declare(strict_types=1);
+
+use Drupal\demo_city_content\DemoContent;
+
+/**
+ * Implements hook_install().
+ */
+function demo_city_content_install(bool $is_syncing): void {
+  if ($is_syncing) {
+    return;
+  }
+  \Drupal::classResolver(DemoContent::class)->build();
+}

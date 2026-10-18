@@ -1,0 +1,5 @@
+accessible_formats.settings:
+  title: 'Accessible formats'
+  description: 'Choose which documents show the accessible format notice and how quickly requests are answered.'
+  route_name: accessible_formats.settings
+  parent: system.admin_config_services

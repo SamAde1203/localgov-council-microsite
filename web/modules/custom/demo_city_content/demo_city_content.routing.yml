@@ -1,0 +1,8 @@
+demo_city_content.home:
+  path: '/home'
+  defaults:
+    _controller: '\Drupal\demo_city_content\Controller\HomeController::build'
+    _title: 'Demo City Council'
+  requirements:
+    # The home page is public: everyone can see the list of services.
+    _access: 'TRUE'

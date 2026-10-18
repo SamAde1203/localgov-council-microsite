@@ -1,0 +1,5 @@
+lookup_enabled: true
+api_base_url: 'https://api.postcodes.io'
+request_timeout: 5
+cache_lifetime: 86400
+flood_limit: 20

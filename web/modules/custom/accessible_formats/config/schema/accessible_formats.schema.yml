@@ -1,0 +1,16 @@
+accessible_formats.settings:
+  type: config_object
+  label: 'Accessible formats settings'
+  mapping:
+    extensions:
+      type: string
+      label: 'File extensions that show the notice, separated by spaces'
+    response_days:
+      type: integer
+      label: 'Working days to respond to a request'
+    notify_email:
+      type: email
+      label: 'Email address told about new requests'
+    flood_limit:
+      type: integer
+      label: 'Maximum requests per visitor per hour'

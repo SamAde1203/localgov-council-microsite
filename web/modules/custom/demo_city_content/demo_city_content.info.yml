@@ -1,0 +1,14 @@
+name: Demo City Council content
+type: module
+description: 'Creates the demonstration content for Demo City Council: services, a guide, a publication and the home page.'
+package: Demo City Council
+core_version_requirement: ^11.1
+dependencies:
+  - accessible_formats:accessible_formats
+  - bin_day_finder:bin_day_finder
+  - localgov_alert_banner:localgov_alert_banner
+  - localgov_core:localgov_media
+  - localgov_guides:localgov_guides
+  - localgov_publications:localgov_publications
+  - localgov_services:localgov_services_landing
+  - localgov_services:localgov_services_page

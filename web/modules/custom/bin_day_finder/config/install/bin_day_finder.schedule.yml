@@ -1,0 +1,33 @@
+# Demonstration data only. A real council would load collection rounds from
+# its waste management system rather than from configuration.
+anchor_date: '2026-01-05'
+default_day: wednesday
+rounds:
+  -
+    day: monday
+    outward_codes: [S1, S2, S3, S4]
+  -
+    day: tuesday
+    outward_codes: [S5, S6, S7, S8]
+  -
+    day: thursday
+    outward_codes: [S9, S10, S11, S12]
+  -
+    day: friday
+    outward_codes: [S13, S14, S17, S20]
+bins:
+  -
+    id: black
+    label: 'Black bin'
+    description: 'General household waste that cannot be recycled.'
+    week: A
+  -
+    id: blue
+    label: 'Blue bin'
+    description: 'Paper, card, cans, glass and plastic bottles.'
+    week: B
+  -
+    id: brown
+    label: 'Brown bin'
+    description: 'Garden waste (subscription service).'
+    week: A

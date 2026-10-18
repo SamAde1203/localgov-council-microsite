@@ -1,0 +1,19 @@
+/*
+  Demo City Council brand, set through LocalGov Base's CSS custom properties.
+
+  Every colour pair used for text was checked against WCAG 2.2 AA
+  (4.5:1 for normal text). Ratios are against white unless noted.
+  System fonts only: nothing to download, so pages render straight away.
+*/
+body {
+  --color-accent: #0b4f6c;        /* 8.9:1, used for the header and links */
+  --color-accent-2: #ffdd00;      /* focus yellow, 14.6:1 against #0b0c0c */
+  --color-link: #14548a;          /* 7.9:1 */
+  --color-green: #00703c;         /* 6.2:1 */
+  --color-red: #b3261e;           /* 6.5:1; base theme's #e4251b is 4.6:1, too close to the limit */
+  --color-orange: #a8480c;        /* 5.8:1; base theme's #ed7522 is 2.9:1, which fails */
+  --color-blue: #14548a;          /* 7.9:1 */
+
+  --font-primary: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-secondary: var(--font-primary);
+}

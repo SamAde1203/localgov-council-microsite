@@ -1,0 +1,11 @@
+notice:
+  css:
+    component:
+      css/accessible-formats.css: {}
+
+confirmation:
+  js:
+    js/confirmation.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

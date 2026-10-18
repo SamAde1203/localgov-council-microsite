@@ -1,0 +1,75 @@
+bin_day_finder.settings:
+  type: config_object
+  label: 'Bin Day Finder settings'
+  mapping:
+    lookup_enabled:
+      type: boolean
+      label: 'Verify postcodes with the lookup service'
+    api_base_url:
+      type: uri
+      label: 'Postcode lookup API base URL'
+    request_timeout:
+      type: integer
+      label: 'Request timeout in seconds'
+      constraints:
+        Range:
+          min: 1
+          max: 30
+    cache_lifetime:
+      type: integer
+      label: 'How long to cache postcode lookups, in seconds'
+      constraints:
+        Range:
+          min: 0
+    flood_limit:
+      type: integer
+      label: 'Maximum lookups per visitor per hour'
+      constraints:
+        Range:
+          min: 1
+
+bin_day_finder.schedule:
+  type: config_object
+  label: 'Bin collection schedule'
+  mapping:
+    anchor_date:
+      type: string
+      label: 'A Monday that starts a "week A" fortnight (Y-m-d)'
+    default_day:
+      type: string
+      label: 'Collection day for postcodes without a round'
+    rounds:
+      type: sequence
+      label: 'Collection rounds'
+      sequence:
+        type: mapping
+        label: 'Round'
+        mapping:
+          day:
+            type: string
+            label: 'Collection weekday'
+          outward_codes:
+            type: sequence
+            label: 'Postcode outward codes'
+            sequence:
+              type: string
+              label: 'Outward code'
+    bins:
+      type: sequence
+      label: 'Bins'
+      sequence:
+        type: mapping
+        label: 'Bin'
+        mapping:
+          id:
+            type: string
+            label: 'Machine name'
+          label:
+            type: label
+            label: 'Label'
+          description:
+            type: text
+            label: 'What goes in this bin'
+          week:
+            type: string
+            label: 'Collection week (A, B or every)'

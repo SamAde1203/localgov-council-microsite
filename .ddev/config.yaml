@@ -1,0 +1,16 @@
+name: localgov-council
+type: drupal11
+docroot: web
+php_version: "8.3"
+webserver_type: nginx-fpm
+xdebug_enabled: false
+database:
+  type: mariadb
+  version: "11.8"
+composer_version: "2"
+nodejs_version: "20"
+web_environment:
+  # Used by PHPUnit kernel and functional tests inside the container.
+  - SIMPLETEST_DB=mysql://db:db@db/db
+  - SIMPLETEST_BASE_URL=http://web
+  - BROWSERTEST_OUTPUT_DIRECTORY=/var/www/html/web/sites/simpletest/browser_output

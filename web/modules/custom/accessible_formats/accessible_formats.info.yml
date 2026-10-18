@@ -1,0 +1,10 @@
+name: Accessible Formats
+type: module
+description: 'Adds a "Request an accessible format" link to downloadable documents, and records requests for the content team.'
+package: Demo City Council
+core_version_requirement: ^11.1
+dependencies:
+  - drupal:file
+  - drupal:options
+  - drupal:user
+configure: accessible_formats.settings

@@ -1,0 +1,5 @@
+entity.accessible_format_request.collection:
+  title: 'Accessible format requests'
+  route_name: entity.accessible_format_request.collection
+  base_route: system.admin_content
+  weight: 20

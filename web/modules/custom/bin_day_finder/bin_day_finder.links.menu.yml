@@ -1,0 +1,12 @@
+bin_day_finder.settings:
+  title: 'Bin Day Finder'
+  description: 'Configure the postcode lookup service used by the Bin Day Finder.'
+  route_name: bin_day_finder.settings
+  parent: system.admin_config_services
+
+bin_day_finder.lookup:
+  title: 'Bin collection day'
+  description: 'Find your next bin collection day.'
+  route_name: bin_day_finder.lookup
+  menu_name: main
+  weight: 0

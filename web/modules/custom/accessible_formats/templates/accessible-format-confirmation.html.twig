@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * Confirmation shown after a request is submitted (GOV.UK panel pattern).
+ *
+ * Available variables:
+ * - reference: The request reference, e.g. AF-00012.
+ * - email: Where the reply will be sent.
+ * - days: Working days to respond.
+ * - document: The document's name.
+ */
+#}
+<div class="accessible-format-confirmation" id="accessible-format-confirmation" tabindex="-1">
+  <div class="accessible-format-confirmation__panel">
+    <h2 class="accessible-format-confirmation__title">{{ 'Request received'|t }}</h2>
+    <p>{{ 'Your reference number'|t }}<br><strong>{{ reference }}</strong></p>
+  </div>
+  <h3>{{ 'What happens next'|t }}</h3>
+  <p>{{ 'We will send %document in the format you asked for to @email within @days working days.'|t({'%document': document, '@email': email, '@days': days}) }}</p>
+  <p>{{ 'If you need it sooner, phone us and give your reference number.'|t }}</p>
+</div>
